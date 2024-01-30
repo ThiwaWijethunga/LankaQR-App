@@ -71,7 +71,7 @@ class _NextPageState extends State<NextPage> {
                   ]),
                 ),
               ),
-              SizedBox(
+              Container(
                 width: size.width,
                 height: size.width * 1,
                 child: loadingPercentage < 100
