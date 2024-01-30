@@ -92,7 +92,7 @@ class _NextPageState extends State<NextPage> {
                         ),
                       ),
               ),
-              SizedBox(
+              Container(
                   width: size.width,
                   height: size.height * 0.2,
                   child: Column(
