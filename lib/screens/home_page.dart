@@ -7,7 +7,9 @@ import 'package:flutter/services.dart';
 import 'package:qrscan/qrscan.dart' as scanner;
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  final String uri;
+
+  const HomePage({Key? key, required this.uri}) : super(key: key);
 
   @override
   State<HomePage> createState() => _HomePageState();
@@ -17,23 +19,24 @@ class _HomePageState extends State<HomePage> {
   late String path;
 
   Future<void> _scanQRFromGallery(String path) async {
-  try {
-    String barcode = await scanner.scanPath(path);
-    debugPrint("Scanned QR code: $barcode");
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) =>  NextPage(code: barcode,)),
-    );
-
-  } catch (e) {
-    debugPrint("Error while scanning QR code: $e");
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const LastPage()),
-    );
+    try {
+      String barcode = await scanner.scanPath(path);
+      debugPrint("Scanned QR code: $barcode");
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => NextPage(
+                  code: barcode,
+                )),
+      );
+    } catch (e) {
+      debugPrint("Error while scanning QR code: $e");
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const LastPage()),
+      );
+    }
   }
-}
-
 
   Future<void> _openGallery() async {
     final picker = ImagePicker();
@@ -42,17 +45,17 @@ class _HomePageState extends State<HomePage> {
 
     if (pickedFile != null) {
       debugPrint('Image path: ${pickedFile.path}');
-      setState( (){
+      setState(() {
         path = pickedFile.path;
       });
-      
     }
   }
+
   void _navigateToResultScreen(String scannedQR) {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => NextPage(code:scannedQR),
+        builder: (context) => NextPage(code: scannedQR),
       ),
     );
   }
@@ -85,7 +88,14 @@ class _HomePageState extends State<HomePage> {
                 alignment: Alignment.topCenter,
               ),
             ),
-            const SizedBox(height: 60),
+            const SizedBox(height: 40),
+            Text(
+              widget.uri,
+              style: const TextStyle(
+                color: Colors.white,
+                fontSize: 20,
+              ),
+            ),
             const Text(
               'Qr Code Validator',
               style: TextStyle(
@@ -93,7 +103,7 @@ class _HomePageState extends State<HomePage> {
                 fontSize: 20,
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
             const Text(
               'Use this application to validate any LankaQR codes',
               style: TextStyle(
@@ -151,7 +161,7 @@ class _HomePageState extends State<HomePage> {
                 },
                 child: Container(
                   width: size.width * 0.7,
-                  height: size.height * 0.12,
+                  height: size.height * 0.13,
                   decoration: BoxDecoration(
                     color: Colors.white,
                     borderRadius: BorderRadius.circular(20.0),
@@ -214,7 +224,7 @@ class _HomePageState extends State<HomePage> {
                           fontSize: 16,
                           color: Colors.black)),
                 )),
-            const SizedBox(height: 550),
+            SizedBox(height: size.height * 0.67),
             const Text('Once upload the QR to the app, you will be',
                 style: TextStyle(
                     fontWeight: FontWeight.bold,
@@ -259,7 +269,9 @@ class _HomePageState extends State<HomePage> {
                     Padding(
                         padding: const EdgeInsets.all(25.0),
                         child: GestureDetector(
-                          onTap: (){_scanQRFromGallery(path);},
+                          onTap: () {
+                            _scanQRFromGallery(path);
+                          },
                           child: Container(
                             alignment: Alignment.center,
                             width: size.width * 0.15,
@@ -273,15 +285,14 @@ class _HomePageState extends State<HomePage> {
                                     blurRadius: 4,
                                     offset: Offset(0, 6),
                                   ),
-                                ]
+                                ]),
+                            child: const Center(
+                              child: Icon(
+                                Icons.upload,
+                                color: Colors.black,
+                                size: 24.0,
                               ),
-                              child: const Center(
-                                  child: Icon(
-                                    Icons.upload,
-                                    color: Colors.black,
-                                    size: 24.0,
-                                  ),
-                                ),
+                            ),
                           ),
                         )),
                   ]),
@@ -294,13 +305,11 @@ class _HomePageState extends State<HomePage> {
                     fontSize: 12,
                     color: Colors.black)),
             const SizedBox(height: 5),
-            const Text(
-              'merchants and community. Version 1.0',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 12,
-                color: Colors.black)
-            ),
+            const Text('merchants and community. Version 1.0',
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 12,
+                    color: Colors.black)),
           ],
         )
       ])),

@@ -140,7 +140,7 @@ class _QrPageState extends State<QrPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const HomePage()),
+                              builder: (context) => const HomePage(uri: '',)),
                         );
                       },
                       child: const Text(

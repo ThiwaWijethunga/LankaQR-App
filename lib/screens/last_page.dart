@@ -119,7 +119,7 @@ class _LastPageState extends State<LastPage> {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const HomePage()),
+                              builder: (context) => const HomePage(uri: '',)),
                         );
                       },
                       child: const Icon(

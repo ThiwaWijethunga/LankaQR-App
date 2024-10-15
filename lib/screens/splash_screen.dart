@@ -1,20 +1,43 @@
+import 'package:app_links/src/app_links.dart';
 import 'package:flutter/material.dart';
 import 'package:project1/screens/home_page.dart';
 
 class SplashScreen extends StatefulWidget {
-  const SplashScreen({Key? key}) : super(key: key);
+  final AppLinks appLinks;
+
+  const SplashScreen({Key? key, required this.appLinks}) : super(key: key);
 
   @override
   State<SplashScreen> createState() => _SplashScreenState();
 }
 
 class _SplashScreenState extends State<SplashScreen> {
- @override
+  Uri? _initialUri;
+
+  @override
   void initState() {
+    _fetchInitialLink();
+
     super.initState();
+    // Future.delayed(const Duration(seconds: 2), () {
+    //   Navigator.of(context).pushReplacement(
+    //     MaterialPageRoute(builder: (context) => const HomePage()),
+    //   );
+    // });
+  }
+
+  Future<void> _fetchInitialLink() async {
+    try {
+      final initialUri = await widget.appLinks.getInitialLink();
+      setState(() {
+        _initialUri = initialUri;
+      });
+    } catch (e) {
+      print('Failed to get initial link: $e');
+    }
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const HomePage()),
+        MaterialPageRoute(builder: (context) =>  HomePage(uri:_initialUri.toString())),
       );
     });
   }
@@ -26,12 +49,12 @@ class _SplashScreenState extends State<SplashScreen> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         body: Stack(
-         // fit: StackFit.expand,
+          // fit: StackFit.expand,
           children: [
             Column(
               children: [
-                Container(
-                  width: size.width ,
+                SizedBox(
+                  width: size.width,
                   height: size.height * 0.69,
                   child: Image.asset(
                     'assets/Loading_Screen_Image.png',
@@ -40,14 +63,14 @@ class _SplashScreenState extends State<SplashScreen> {
                   ),
                 ),
                 Container(
-                   // alignment: Alignment.bottomCenter,
+                    // alignment: Alignment.bottomCenter,
                     width: size.width * 1,
                     height: size.height * 0.31,
                     color: const Color(0xff201B51),
                     child: Column(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(top:20),
+                          padding: const EdgeInsets.only(top: 20),
                           child: Image.asset(
                             'assets/LankaQR_Logo.png',
                             width: size.width * 0.2,
@@ -77,8 +100,7 @@ class _SplashScreenState extends State<SplashScreen> {
                           ),
                         ),
                       ],
-                    )
-                  )
+                    ))
               ],
             )
           ],

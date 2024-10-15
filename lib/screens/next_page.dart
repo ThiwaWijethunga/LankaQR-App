@@ -107,7 +107,7 @@ class _NextPageState extends State<NextPage> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (c) => const HomePage()));
+                                        builder: (c) => const HomePage(uri: '',)));
                               },
                               icon: const Icon(
                                 Icons.home,
