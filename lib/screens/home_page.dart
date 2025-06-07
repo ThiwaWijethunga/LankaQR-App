@@ -47,14 +47,6 @@ class _HomePageState extends State<HomePage> {
       
     }
   }
-  // void _navigateToResultScreen(String scannedQR) {
-  //   Navigator.push(
-  //     context,
-  //     MaterialPageRoute(
-  //       builder: (context) => NextPage(code:scannedQR),
-  //     ),
-  //   );
-  // }
 
   @override
   Widget build(BuildContext context) {
