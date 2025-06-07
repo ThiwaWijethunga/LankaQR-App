@@ -1,4 +1,3 @@
-//import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:project1/screens/home_page.dart';
@@ -97,7 +96,7 @@ class _QrPageState extends State<QrPage> {
                             icon: ValueListenableBuilder(
                               valueListenable: cameraController.torchState,
                               builder: (context, state, child) {
-                                switch (state as TorchState) {
+                                switch (state) {
                                   case TorchState.on:
                                     return const Icon(Icons.flash_on,
                                         color: Colors.yellow);

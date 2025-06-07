@@ -30,7 +30,7 @@ class _SplashScreenState extends State<SplashScreen> {
           children: [
             Column(
               children: [
-                Container(
+                SizedBox(
                   width: size.width ,
                   height: size.height * 0.69,
                   child: Image.asset(
