@@ -20,8 +20,7 @@ class _HomePageState extends State<HomePage> {
   try {
     String barcode = await scanner.scanPath(path);
     debugPrint("Scanned QR code: $barcode");
-    Navigator.push(
-      context,
+    Navigator.push(context,
       MaterialPageRoute(builder: (context) =>  NextPage(code: barcode,)),
     );
 
@@ -48,14 +47,14 @@ class _HomePageState extends State<HomePage> {
       
     }
   }
-  void _navigateToResultScreen(String scannedQR) {
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => NextPage(code:scannedQR),
-      ),
-    );
-  }
+  // void _navigateToResultScreen(String scannedQR) {
+  //   Navigator.push(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (context) => NextPage(code:scannedQR),
+  //     ),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
